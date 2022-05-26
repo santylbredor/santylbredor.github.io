@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/OrbitControls.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    
+    
+      <script>
+          const scene = new THREE.Scene();
+			const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+			const renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+            const controls = new THREE.OrbitControls( camera, renderer.domElement );
+            var ambient = new THREE.AmbientLight(0xffffff,1);//intensidad de la luz
+                scene.add(ambient);//Se añade a la escena
+             
+            const loader = new THREE.TextureLoader();
+            scene.background = new THREE.CubeTextureLoader().setPath('./cube/').load(['kenon_star_bk.jpg','kenon_star_dn.jpg','kenon_star_ft.jpg','kenon_star_lf.jpg','kenon_star_rt.jpg','kenon_star_up.jpg']);
+            var textura1 = loader.load('./images/ins.jpg');
+            var textura2 = loader.load('./images/floor.jpg');
+            var textura3 = loader.load('./images/tik.jpg');
+            var textura4 = loader.load('./images/tw.jpg');
+            var textura5 = loader.load('./images/yout.jpg');
+            var planeGeometry = new THREE.PlaneGeometry(30, 30);//Creamos objeto doonde le ponemos forma y tamaño al suelo donde ocurrirá la escena
+            var planeMaterial = new THREE.MeshPhongMaterial({map: textura2, side: THREE.DoubleSide});//Material del suelo o el plano
+            var plane = new THREE.Mesh(planeGeometry, planeMaterial);//Se instancia en el objeto plano los atributos del plano
+            plane.receiveShadow = true;//Recibe la sombra
+            plane.rotation.x = -0.5 * Math.PI;//Rotacion en x multiplicado por pi
+            plane.position.x = 0;//Posicion en x en el centro del escenario
+            plane.position.y = -2;//Posicion un poco mas abajo del centro
+            plane.position.z = 0;// posicion de origen en el eje z
+            scene.add(plane);
+
+            //Atributos del cubo
+            var cubeGeometry = new THREE.PlaneGeometry(30,30);//Objeto cubo para manipular sus dimensiones
+            var cubeMaterial = new THREE.MeshPhongMaterial({ map:textura1});//Otra variable para instanciar el material y la opacidad del cubo dentro de la escena
+            var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+            cube.name="body1"
+            //se le asigna al elemento cubo los atributos que hemos declarado
+            cube.material.side = THREE.DoubleSide;
+
+                cube.castShadow=true;//Le ponemos la sombra para que la sombra se adapte a las dimensiones del cubo
+                cube.rotation.y=Math.PI/180 * 90;
+                cube.position.set(-15,12,0)
+                cube.scale.x = -1;
+            scene.add(cube);//Añadimos el cubo con sus atributos a la escena
+
+            var cubeGeometry1 = new THREE.PlaneGeometry(30,30);//Objeto cubo para manipular sus dimensiones
+            var cubeMaterial1 = new THREE.MeshPhongMaterial({ map:textura3});//Otra variable para instanciar el material y la opacidad del cubo dentro de la escena
+            var cube1 = new THREE.Mesh(cubeGeometry1, cubeMaterial1);
+            cube1.name="body2"
+            //se le asigna al elemento cubo los atributos que hemos declarado
+            cube1.material.side = THREE.DoubleSide;
+
+                cube1.castShadow=true;//Le ponemos la sombra para que la sombra se adapte a las dimensiones del cubo
+                
+                cube1.position.set(0,12,15)
+                
+            scene.add(cube1);//Añadimos el cubo con sus atributos a la escena
+            
+            var cubeGeometry2 = new THREE.PlaneGeometry(30,30);//Objeto cubo para manipular sus dimensiones
+            var cubeMaterial2 = new THREE.MeshPhongMaterial({ map:textura4});//Otra variable para instanciar el material y la opacidad del cubo dentro de la escena
+            var cube2 = new THREE.Mesh(cubeGeometry2, cubeMaterial2);
+            cube2.name="body3"
+            //se le asigna al elemento cubo los atributos que hemos declarado
+            cube2.material.side = THREE.DoubleSide;
+
+                cube2.castShadow=true;//Le ponemos la sombra para que la sombra se adapte a las dimensiones del cubo
+                
+                cube2.position.set(0,12,-15)
+                cube2.scale.x=-1;
+            scene.add(cube2);
+
+            var cubeGeometry3 = new THREE.PlaneGeometry(30,30);//Objeto cubo para manipular sus dimensiones
+            var cubeMaterial3 = new THREE.MeshPhongMaterial({ map:textura5});//Otra variable para instanciar el material y la opacidad del cubo dentro de la escena
+            var cube3 = new THREE.Mesh(cubeGeometry3, cubeMaterial3);
+            cube3.name="body4"
+            //se le asigna al elemento cubo los atributos que hemos declarado
+            cube3.material.side = THREE.DoubleSide;
+
+                cube3castShadow=true;//Le ponemos la sombra para que la sombra se adapte a las dimensiones del cubo
+                
+                cube3.position.set(15,12,0)
+                cube3.rotation.y = -0.5 * Math.PI;
+                cube3.scale.x = -1;
+
+            scene.add(cube3);//Añadimos el cubo con sus atributos a la escena
+                //posicion de la camara en x
+                camera.position.x = 40;
+                //Posicion de la camara en y
+            camera.position.y = 20;
+                //Posicion de la cmara en z
+            camera.position.z = 50;
+                //El compportamiento de la camara será con respecto a la posicion de la escena
+            camera.lookAt(scene.position);
+
+			camera.position.z = 5;
+            // raycast
+            var raycaster = new THREE.Raycaster();
+            var mouse = new THREE.Vector2();
+
+            function onMouseClick( event ) {
+
+// Calcula la posición del punto requerido por el lanzador de rayos por la posición del clic del mouse, con el centro de la pantalla como origen, y el rango de valores es -1 a 1.
+
+mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+// Calcula el emisor de rayos por la posición del punto del mouse y la matriz de la cámara actual
+raycaster.setFromCamera( mouse, camera );
+
+// Obtener la colección de matrices donde se cruzan la línea raycaster y todos los modelos
+var intersects = raycaster.intersectObjects( scene.children );
+
+console.log(intersects);
+
+// Establezca el color de todos los modelos que se cruzan en rojo, si solo necesita activar el primer evento, luego cambie el color del primer modelo en la matriz
+for ( var i = 0; i < intersects.length; i++ ) {
+    if(intersects.length>0){
+            console.log(intersects[0].object.name);
+            if(intersects[0].object.name=="body1"){
+                window.open(
+              "https://www.instagram.com/eliz.gonzalez15/?igshid=YmMyMTA2M2Y=", "_blank");
+
+            }
+            if(intersects[0].object.name=="body2"){
+                //intersects[0].object.material.color.set(0xff0000);
+                window.open(
+              "https://www.tiktok.com/@multihistorica?is_from_webapp=1&sender_device=pc", "_blank");
+
+            }
+            if(intersects[0].object.name=="body3"){
+                //intersects[0].object.material.color.set(0xff0000);
+                window.open(
+              "https://twitter.com/MultimediaHist?s=20&t=VhUXjW7kr_XnsR9aJIfZNA", "_blank");
+            }
+            if(intersects[0].object.name=="body4"){
+                //intersects[0].object.material.color.set(0xff0000);
+                window.open("https://www.youtube.com/channel/UCjGu5OEjr23VB750M9Zi8OA", "_blank");
+            }
+        
+        }
+   // intersects[i].object.name=="body1";
+    
+
+}
+
+}
+
+window.addEventListener( 'click', onMouseClick, false );
+			function animate() {
+				requestAnimationFrame( animate );
+                    var rotSpeed = 0.009;
+                    //La posicion de la camra en x para que se mueva en forma de objetos circulares
+                    camera.position.x = camera.position.x * Math.cos(rotSpeed) + camera.position.z * Math.sin(rotSpeed);
+                    //La  posocion de la camara en y para que se mueva en forma de pbjeto circular
+                    camera.position.z = camera.position.z * Math.cos(rotSpeed) - camera.position.x * Math.sin(rotSpeed);
+
+                    camera.lookAt(scene.position);
+
+				renderer.render( scene, camera );
+			};
+
+			animate();
+      </script>
+   
+
+    <script src="./js/custom.js"></script>
+</body>
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Escena Navideña</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+		<script src="three.js"></script>
+        <script src="inflate.min.js"></script>
+        <script src="FBXLoader.js"></script>
+        <script src="OrbitControls.js"></script>
+        <script src="DeviceOrientationControls.js"></script>
+		<script>
+			var clock = new THREE.Clock();
+			
+			const scene = new THREE.Scene();
+			const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+			const renderer = new THREE.WebGLRenderer();
+			renderer.shadowMap.enabled = true;
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+            const controls = new THREE.OrbitControls( camera, renderer.domElement );
+			
+
+
+			const light1 = new THREE.AmbientLight( 0xffffff, 0.4); 
+			scene.add( light1 );
+			
+			const light5 = new THREE.PointLight(0xE69701,0.3);
+			light5.position.set(12,3,3);
+			scene.add(light5);
+
+
+			const light2 = new THREE.SpotLight( 0x2844E0,1.5); 
+			light2.position.set(-20,30,-50);
+			light2.angle=0.25;
+			light2.decay=1;
+			light2.castShadow = true;
+			light2.shadow.mapSize.width = 1024;
+			light2.shadow.mapSize.height = 1024;
+
+			scene.add( light2 );
+
+
+
+			const SpotLightHelper3 = new THREE.SpotLightHelper( light2);
+			const PointLightHelper = new THREE.PointLightHelper(light5);
+			//scene.add(PointLightHelper,SpotLightHelper3);
+
+            const loader = new THREE.TextureLoader();
+			var runnerTexture = new THREE.ImageUtils.loadTexture("animation/fire_sprite.jpg");
+			var annie = new TextureAnimator(runnerTexture,8,1,8,100);
+
+			
+			var runnerMaterial = new THREE.MeshBasicMaterial( { map: runnerTexture, side:THREE.DoubleSide } );
+			var runnerGeometry = new THREE.PlaneGeometry(4, 3, 1, 1);
+			var runner = new THREE.Mesh(runnerGeometry, runnerMaterial);
+			runner.position.set(-12,7,-15.3);
+	//		scene.add(runner);
+	
+            
+           
+            const loaderM = new THREE.FBXLoader();
+				loaderM.load( 'navidad.fbx', function ( object ) {
+                 
+					object.traverse( function ( child ) {
+
+						if ( child.isMesh ) {
+
+							child.castShadow = true;
+							child.receiveShadow = true;
+                            console.log(child.name)
+
+							if(child.name=="arbol_tronco"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/arbol/tronco/tronco1.jpg'),
+									normalMap:loader.load('textures/arbol/tronco/tronco1_normal.jpg'),
+									roughnessMap:loader.load('textures/arbol/tronco/tronco1_roug.jpg')
+									                              
+                                    });
+                        	}
+							if(child.name=="fuego"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map: runnerTexture
+									                            
+                                    });
+                        	}
+
+							if(child.name=="arbol_hojas"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/arbol/hojas/hojas1.jpg'),
+									normalMap:loader.load('textures/arbol/hojas/hojas1_normal.jpg'),
+									roughnessMap:loader.load('textures/arbol/hojas/hojas1_roug.jpg')
+									                              
+                                    });
+                        	}
+                        	if(child.name=="regalo1"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/regalos/1/paper_diffuse3.png'),
+									normalMap:loader.load('textures/regalos/1/present_Present_Normal.png'),
+									aoMap: loader.load('textures/regalos/1/present_Present_AO.png'),
+									roughnessMap:loader.load('textures/regalos/1/present_Present_MetallicSmoothness.png')
+                                    });
+                        	}
+							
+							if(child.name=="regalo7"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/regalos/1/paper_diffuse3.png'),
+									normalMap:loader.load('textures/regalos/1/present_Present_Normal.png'),
+									aoMap: loader.load('textures/regalos/1/present_Present_AO.png'),
+									roughnessMap:loader.load('textures/regalos/1/present_Present_MetallicSmoothness.png')
+                                    });
+                        	}
+							if(child.name=="regalo5"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/regalos/1/paper_diffuse3.png'),
+									normalMap:loader.load('textures/regalos/1/present_Present_Normal.png'),
+									aoMap: loader.load('textures/regalos/1/present_Present_AO.png'),
+									roughnessMap:loader.load('textures/regalos/1/present_Present_MetallicSmoothness.png')
+                                    });
+                        	}
+
+							if(child.name=="regalo2"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/regalos/2/paper_diffuse2.png'),
+									normalMap:loader.load('textures/regalos/1/present_Present_Normal.png'),
+									aoMap: loader.load('textures/regalos/1/present_Present_AO.png'),
+									roughnessMap:loader.load('textures/regalos/1/present_Present_MetallicSmoothness.png')
+                                    });
+                        	}
+							if(child.name=="regalo6"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/regalos/2/paper_diffuse2.png'),
+									normalMap:loader.load('textures/regalos/1/present_Present_Normal.png'),
+									aoMap: loader.load('textures/regalos/1/present_Present_AO.png'),
+									roughnessMap:loader.load('textures/regalos/1/present_Present_MetallicSmoothness.png')
+                                    });
+                        	}
+
+							if(child.name=="regalo3"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/regalos/3/paper_diffuse1.png'),
+									normalMap:loader.load('textures/regalos/1/present_Present_Normal.png'),
+									aoMap: loader.load('textures/regalos/1/present_Present_AO.png'),
+									roughnessMap:loader.load('textures/regalos/1/present_Present_MetallicSmoothness.png')
+                                    });
+                        	}
+
+							if(child.name=="regalo4"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/regalos/3/paper_diffuse1.png'),
+									normalMap:loader.load('textures/regalos/1/present_Present_Normal.png'),
+									aoMap: loader.load('textures/regalos/1/present_Present_AO.png'),
+									roughnessMap:loader.load('textures/regalos/1/present_Present_MetallicSmoothness.png')
+                                    });
+                        	}
+
+							if(child.name=="regalo9"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/regalos/3/paper_diffuse1.png'),
+									normalMap:loader.load('textures/regalos/1/present_Present_Normal.png'),
+									aoMap: loader.load('textures/regalos/1/present_Present_AO.png'),
+									roughnessMap:loader.load('textures/regalos/1/present_Present_MetallicSmoothness.png')
+                                    });
+                        	}
+							if(child.name=="regalo10"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/regalos/1/paper_diffuse3.png'),
+									normalMap:loader.load('textures/regalos/1/present_Present_Normal.png'),
+									aoMap: loader.load('textures/regalos/1/present_Present_AO.png'),
+									roughnessMap:loader.load('textures/regalos/1/present_Present_MetallicSmoothness.png')
+                                    });
+                        	}
+							if(child.name=="regalo11"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/regalos/2/paper_diffuse2.png'),
+									normalMap:loader.load('textures/regalos/1/present_Present_Normal.png'),
+									aoMap: loader.load('textures/regalos/1/present_Present_AO.png'),
+									roughnessMap:loader.load('textures/regalos/1/present_Present_MetallicSmoothness.png')
+                                    });
+                        	}
+							if(child.name=="regalo12"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/regalos/1/paper_diffuse3.png'),
+									normalMap:loader.load('textures/regalos/1/present_Present_Normal.png'),
+									aoMap: loader.load('textures/regalos/1/present_Present_AO.png'),
+									roughnessMap:loader.load('textures/regalos/1/present_Present_MetallicSmoothness.png')
+                                    });
+                        	}
+							if(child.name=="regalo13"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/regalos/2/paper_diffuse2.png'),
+									normalMap:loader.load('textures/regalos/1/present_Present_Normal.png'),
+									aoMap: loader.load('textures/regalos/1/present_Present_AO.png'),
+									roughnessMap:loader.load('textures/regalos/1/present_Present_MetallicSmoothness.png')
+                                    });
+                        	}
+							if(child.name=="regalo14"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/regalos/3/paper_diffuse1.png'),
+									normalMap:loader.load('textures/regalos/1/present_Present_Normal.png'),
+									aoMap: loader.load('textures/regalos/1/present_Present_AO.png'),
+									roughnessMap:loader.load('textures/regalos/1/present_Present_MetallicSmoothness.png')
+                                    });
+                        	}
+							if(child.name=="regalo8"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/regalos/3/paper_diffuse1.png'),
+									normalMap:loader.load('textures/regalos/1/present_Present_Normal.png'),
+									aoMap: loader.load('textures/regalos/1/present_Present_AO.png'),
+									roughnessMap:loader.load('textures/regalos/1/present_Present_MetallicSmoothness.png')
+                                    });
+                        	}
+
+							if(child.name=="madera_chime"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/arbol/tronco/tronco1.jpg'),
+									normalMap:loader.load('textures/arbol/tronco/tronco1_normal.jpg'),
+									roughnessMap:loader.load('textures/arbol/tronco/tronco1_roug.jpg')
+                                    });
+                        	}
+
+							if(child.name=="chime"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/chimenea/ladrillo1.jpg'),
+									normalMap:loader.load('textures/chimenea/ladrillo1_normal.jpg'),
+									roughnessMap:loader.load('textures/chimenea/ladrillo1_roug.jpg')
+                                    });
+                        	}
+
+							if(child.name=="alfombra"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/sala/alfombra/silla.jpg'),
+									normalMap:loader.load('textures/sala/alfombra/silla_normal.jpg'),
+									roughnessMap:loader.load('textures/sala/alfombra/silla_roug.jpg')
+                                    });
+                        	}
+							if(child.name=="sillon"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/sala/sillon/telasillon.jpg'),
+									normalMap:loader.load('textures/sala/sillon/telasillon_normal.jpg'),
+									roughnessMap:loader.load('textures/sala/sillon/telasillon_roug.jpg')
+                                    });
+                        	}
+
+							if(child.name=="mesita"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/sala/mesa/mesa.jpg'),
+									normalMap:loader.load('textures/sala/mesa/mesa_normal.jpg'),
+									roughnessMap:loader.load('textures/sala/mesa/mesa_rougness.jpg')
+                                    });
+                        	}
+							if(child.name=="ventana"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/ventana/madera1.jpg'),
+									normalMap:loader.load('textures/ventana/madera_normal.jpg'),
+									roughnessMap:loader.load('textures/ventana/madera_roug.jpg')
+                                    });
+                        	}
+							if(child.name=="cortina3"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/ventana/madera1.jpg'),
+									normalMap:loader.load('textures/ventana/madera_normal.jpg'),
+									roughnessMap:loader.load('textures/ventana/madera_roug.jpg')
+                                    });
+                        	}
+							if(child.name=="cortina1"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/ventana/cortina/tela1.jpg'),
+									normalMap:loader.load('textures/ventana/cortina/tela_normal.jpg'),
+									roughnessMap:loader.load('textures/ventana/cortina/tela_roug.jpg')
+                                    });
+                        	}
+							if(child.name=="cortina2"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/ventana/cortina/tela1.jpg'),
+									normalMap:loader.load('textures/ventana/cortina/tela_normal.jpg'),
+									roughnessMap:loader.load('textures/ventana/cortina/tela_roug.jpg')
+                                    });
+                        	}
+
+							if(child.name=="luz1"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {
+										emissive:0xE6DE00,
+									emissiveIntensity:25,
+                                    });
+                        	}
+
+							if(child.name=="luz2"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {
+										emissive:0xE60800,
+									emissiveIntensity:0.2,
+                                    });
+                        	}
+
+							if(child.name=="luz3"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {
+										emissive:0xE6AE00,
+									emissiveIntensity:0.5,
+									
+                                    });
+                        	}
+							if(child.name=="luz4"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {emissive:0xE60800,
+									emissiveIntensity:0.5,
+									
+                                    });
+                        	}
+							if(child.name=="luz5"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {emissive:0xD600E6,
+									emissiveIntensity:1,
+									
+                                    });
+                        	}
+							if(child.name=="luz6"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {emissive:0x226499,
+									emissiveIntensity:1,
+                                    });
+                        	}
+
+							if(child.name=="bola1"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {emissive:0xE61200,
+									emissiveIntensity:0.5,
+									
+                                    });
+                        	}
+							if(child.name=="bola2"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {emissive:0x0063E6,
+									emissiveIntensity:0.5,						
+                                    });
+                        	}
+							if(child.name=="bola3"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {emissive:0xE600DE,
+									emissiveIntensity:0.5,
+									
+                                    });
+                        	}
+
+							if(child.name=="bola5"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {emissive:0xE6B600,
+									emissiveIntensity:0.5,
+									
+                                    });
+                        	}
+
+							if(child.name=="bola4"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {emissive:0xE600DE,
+									emissiveIntensity:0.5,
+                                    });
+                        	}
+							if(child.name=="bola6"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {emissive:0x0063E6,
+									emissiveIntensity:0.5,
+                                    });
+                        	}
+							if(child.name=="bola7"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {emissive:0xE61200,
+									emissiveIntensity:0.5,
+									
+                                    });
+                        	}
+							if(child.name=="bola8"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {emissive:0xE600DE,
+									emissiveIntensity:0.5,
+									
+                                    });
+                        	}
+							if(child.name=="bola9"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {emissive:0xE6B600,
+									emissiveIntensity:0.5,
+									
+                                    });
+                        	}
+							if(child.name=="arbol_estrella"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {emissive:0xE6AE00,
+									emissiveIntensity: 1,
+									
+                                    });
+                        	}
+
+
+							if(child.name=="Piso2"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/piso/Piso.jpg'),
+									normalMap:loader.load('textures/piso/piso_normal.jpg'),
+									roughnessMap:loader.load('textures/piso/piso_bri.jpg')
+									                              
+                                    });
+                        	}
+
+							if(child.name=="Piso1"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/piso/Piso.jpg'),
+									normalMap:loader.load('textures/piso/piso_normal.jpg'),
+									roughnessMap:loader.load('textures/piso/piso_bri.jpg')
+									                              
+                                    });
+                        	}
+
+							if(child.name=="Piso3"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/piso/Piso.jpg'),
+									normalMap:loader.load('textures/piso/piso_normal.jpg'),
+									roughnessMap:loader.load('textures/piso/piso_bri.jpg')
+									                              
+                                    });
+                        	}
+
+							if(child.name=="Piso7"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/piso/Piso.jpg'),
+									normalMap:loader.load('textures/piso/piso_normal.jpg'),
+									roughnessMap:loader.load('textures/piso/piso_bri.jpg')
+									                              
+                                    });
+                        	}
+
+							if(child.name=="Piso9"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/piso/Piso.jpg'),
+									normalMap:loader.load('textures/piso/piso_normal.jpg'),
+									roughnessMap:loader.load('textures/piso/piso_bri.jpg')
+									                              
+                                    });
+                        	}
+							if(child.name=="Piso5"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/piso/Piso.jpg'),
+									normalMap:loader.load('textures/piso/piso_normal.jpg'),
+									roughnessMap:loader.load('textures/piso/piso_bri.jpg')
+									                              
+                                    });
+                        	}
+
+							if(child.name=="Piso6"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/piso/Piso.jpg'),
+									normalMap:loader.load('textures/piso/piso_normal.jpg'),
+									roughnessMap:loader.load('textures/piso/piso_bri.jpg')
+									                              
+                                    });
+                        	}
+
+							if(child.name=="Piso4"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/piso/Piso.jpg'),
+									normalMap:loader.load('textures/piso/piso_normal.jpg'),
+									roughnessMap:loader.load('textures/piso/piso_bri.jpg')
+									                              
+                                    });
+                        	}
+
+							if(child.name=="Piso10"){
+                                child.material=new THREE.MeshPhongMaterial(
+                                    {map:loader.load('textures/escaleras/silla.jpg'),
+									normalMap:loader.load('textures/escaleras/silla_normal.jpg'),
+									                              
+                                    });
+                        	}
+		
+                        	
+						}
+
+
+                     } );
+                    
+					scene.add( object );
+
+				} );
+
+
+			camera.position.set(-37,25,6.35);
+
+			const animate = function () {
+				requestAnimationFrame( animate );
+                console.log(camera.position);
+				var delta = clock.getDelta(); 
+
+				annie.update(1000 * delta);
+
+                controls.update();
+				renderer.render( scene, camera );
+			};
+
+			animate();
+	function TextureAnimator(texture, tilesHoriz, tilesVert, numTiles, tileDispDuration) 
+{	
+	// note: texture passed by reference, will be updated by the update function.
+		
+	this.tilesHorizontal = tilesHoriz;
+	this.tilesVertical = tilesVert;
+	// how many images does this spritesheet contain?
+	//  usually equals tilesHoriz * tilesVert, but not necessarily,
+	//  if there at blank tiles at the bottom of the spritesheet. 
+	this.numberOfTiles = numTiles;
+	texture.wrapS = texture.wrapT = THREE.RepeatWrapping; 
+	texture.repeat.set( 1 / this.tilesHorizontal, 1 / this.tilesVertical );
+
+	// how long should each image be displayed?
+	this.tileDisplayDuration = tileDispDuration;
+
+	// how long has the current image been displayed?
+	this.currentDisplayTime = 0;
+
+	// which image is currently being displayed?
+	this.currentTile = 0;
+		
+	this.update = function( milliSec )
+	{
+		this.currentDisplayTime += milliSec;
+		while (this.currentDisplayTime > this.tileDisplayDuration)
+		{
+			this.currentDisplayTime -= this.tileDisplayDuration;
+			this.currentTile++;
+			if (this.currentTile == this.numberOfTiles)
+				this.currentTile = 0;
+			var currentColumn = this.currentTile % this.tilesHorizontal;
+			texture.offset.x = currentColumn / this.tilesHorizontal;
+			var currentRow = Math.floor( this.currentTile / this.tilesHorizontal );
+			texture.offset.y = currentRow / this.tilesVertical;
+		}
+	};
+}	
+		</script>
+	</body>
+</html>

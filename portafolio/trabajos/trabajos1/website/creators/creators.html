@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
+<title>Creadores Multimedia</title>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="icon" href="../../images/logo.png">
+</head>
+<body>
+    
+    <a href="javascript: history.go(-1)" ><img src="../images/back.png" id="atras"></a>
+
+
+    <section class="section--top" id="hero">
+        <a href="../index.html"  >
+            <img class="img--bg img--multimedia" src="./images/Multimedia_Tittle.png"/>
+          </a> 
+        <a href="../index.html"  >
+            <img class="img--bg img--historica" src="./images/Multimedia_Tittle2.png"/>
+          </a> 
+        
+       
+        <canvas id="drawingCanvas"></canvas>
+        <p class="about__text" >
+            “Here's to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They're not fond of rules. And they have no respect for the status quo. You can quote them, disagree with them, glorify or vilify them. About the only thing you can't do is ignore them.”
+        </p>
+        <br/>
+        <p class="about__text1">
+            ― Rob Siltanen
+        </p>
+       
+    </section>
+    
+
+    <section class="section--bottom"> 
+        <div class="border"></div>
+        <div class="gallery">
+            <table class="table__gallery">
+                <tbody>
+                <tr>
+                <td>
+                    <a class="gallery_link" href="https://valentina-portafolio.netlify.app/" target="_blank" >
+                        <img class="gallery__img img_vale" src="./images/sakura_profile.jpg" alt="Valentina Quiroz "/>
+                      </a> 
+                </td>
+                <td>
+                    <a class="gallery_link" href="http://alejoportafolio.netlify.app"  target="_blank">
+                        <img class="gallery__img img_alejo" src="./images/alejo_profile.jpg" alt=" Alejandro Sandoval"/>
+                      </a> 
+                </td>
+                </tr>
+                </tbody>
+                </table>
+                <h1 class="creators__gallery">Creadores</h1>
+                <table class="table__gallery">
+                    <tbody>
+                    <tr>
+                    <td>
+                        <a class="gallery_link" id="santy_profile" href="http://santiago-labrador.netlify.app" target="_blank">
+                            <img class="gallery__img img_santy" src="./images/santy_profile.jpg" alt="Santiago Labrador "/>
+                          </a>  
+                    </td>
+                    <td>
+                        <a class="gallery_link" id="camilo_profile" href="http://camilofonseca.netlify.app" target="_blank">
+                            <img class="gallery__img img_camilo" src="./images/camilo_profile.jpg" alt="Camilo Riaño "/>
+                          </a> 
+                    </td>
+                    </tr>
+                    </tbody>
+                    </table>
+            
+        </div>
+    </section>
+    <!-- contactame-->  
+<div id="contacto" class="section appear clearfix">
+	<br>
+	
+	<div class="container-fluid bg-5 text-center">
+  	<div class="section-header">
+	 <div class="contact_form">
+
+		<div class="formulario">      
+		  <center><h1 id="contact">Contáctanos</h1></center>
+			<h3>Escribenos para más información</h3>
+
+	
+	
+			  <form action="submeter-formulario.php" method="post">       
+	
+					<p>
+					  <label for="nombre" class="colocar_nombre">Nombre
+						<span class="obligatorio">*</span>
+					  </label>
+						<input type="text" name="introducir_nombre" id="nombre" required="obligatorio" placeholder="Escribe tu nombre">
+					</p>
+				  
+					<p>
+					  <label for="email" class="colocar_email">Email
+						<span class="obligatorio">*</span>
+					  </label>
+						<input type="email" name="introducir_email" id="email" required="obligatorio" placeholder="Escribe tu Email">
+					</p>
+				
+					<p>
+					  <label for="telefone" class="colocar_telefono">Teléfono
+					  </label>
+						<input type="tel" name="introducir_telefono" id="telefono" placeholder="Escribe tu teléfono">
+					</p>       
+				  
+					<p>
+					  <label for="asunto" class="colocar_asunto">Asunto
+						<span class="obligatorio">*</span>
+					  </label>
+						<input type="text" name="introducir_asunto" id="assunto" required="obligatorio" placeholder="Escribe un asunto">
+					</p>    
+				  
+					<p>
+					  <label for="mensaje" class="colocar_mensaje">Mensaje
+						<span class="obligatorio">*</span>
+					  </label>                     
+						<textarea name="introducir_mensaje" class="texto_mensaje" id="mensaje" required="obligatorio" placeholder="Deja aquí tu comentario..."></textarea> 
+					</p>                    
+				  
+					<center><a href="creators.html" class="button" id="enviar">Enviar</a></center><br>
+					<p class="aviso">
+					  <span class="obligatorio"> * </span>los campos son obligatorios.
+					</p>          
+				
+			  </form>
+		</div>  
+	  </div>
+	  
+	</div>
+</div>
+</div>
+</div>
+    <center>
+    <div class="footer">
+        <div class="border"></div>
+        <!--<p class="float-right"><a href="#hero">Back to top</a></p>-->
+             <p id="foot">© Universidad de San Buenaventura 2022. · <a>Privacy</a> · <a>Terms</a></p>
+     </div>
+    </center>
+
+    <script src="./js/custom.js"></script>
+</body>
+</html>
